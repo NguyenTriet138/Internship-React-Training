@@ -1,6 +1,9 @@
 function Car() {
-  const brand = "Ford";
-  const model = "Mustang";
+  const myobj = {
+    name: "Fiat",
+    model: "500",
+    color: "white"
+  };
 
   return (
     <>
@@ -10,7 +13,7 @@ function Car() {
       }}>
         My Car
       </h2>
-      <p>It is a {brand} {model}.</p>
+      <p>It is a {myobj.color} {myobj.name} {myobj.model}.</p>
     </>
   );
 }
