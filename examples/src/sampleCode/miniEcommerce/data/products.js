@@ -5,7 +5,7 @@ const products = [
     price: 999,
     category: "phone",
     description: "Apple iPhone 14 with A15 Bionic chip.",
-    image: "https://via.placeholder.com/200x150?text=iPhone+14"
+    image: "https://ibb.co/G4v4XdMG"
   },
   {
     id: 2,
@@ -13,7 +13,7 @@ const products = [
     price: 899,
     category: "phone",
     description: "Samsung Galaxy S23 with Snapdragon 8 Gen 2.",
-    image: "https://via.placeholder.com/200x150?text=Galaxy+S23"
+    image: "https://ibb.co/Gf6W4WCd"
   },
   {
     id: 3,
@@ -21,7 +21,7 @@ const products = [
     price: 1299,
     category: "laptop",
     description: "Apple MacBook Air M2 2023 model.",
-    image: "https://via.placeholder.com/200x150?text=MacBook+Air+M2"
+    image: "https://ibb.co/VWNkC16X"
   }
 ];
 
