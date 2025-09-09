@@ -1,11 +1,12 @@
 import './App.css';
-import Counter from './sampleCode/hooks/useRef';
+import CanculateProducts from './sampleCode/hooks/useMemo';
 
 function App() {
+  
   return (
-    <div>
+    <div style={{ padding: '20px' }}>
       <h1>React Examples</h1>
-      <Counter />
+      <CanculateProducts />
     </div>
   );
 }
