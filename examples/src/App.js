@@ -52,29 +52,55 @@
 
 // export default App;
 
+// ----------------------------- END Todo App--------------------------------
 
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import ProductList from "../src/sampleCode/miniEcommerce/components/ProductList";
-import ProductDetail from "../src/sampleCode/miniEcommerce/components/ProductDetail";
-import Cart from "../src/sampleCode/miniEcommerce/components/Cart";
-import { CartProvider } from "../src/sampleCode/miniEcommerce/context/CartContext";
-import "./App.css";
+// import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+// import ProductList from "../src/sampleCode/miniEcommerce/components/ProductList";
+// import ProductDetail from "../src/sampleCode/miniEcommerce/components/ProductDetail";
+// import Cart from "../src/sampleCode/miniEcommerce/components/Cart";
+// import { CartProvider } from "../src/sampleCode/miniEcommerce/context/CartContext";
+// import "./App.css";
+
+// function App() {
+//   return (
+//     <CartProvider>
+//       <Router>
+//         <nav style={{ marginBottom: "20px" }}>
+//           <Link to="/">Home</Link> | <Link to="/cart">Cart</Link>
+//         </nav>
+//         <Routes>
+//           <Route path="/" element={<ProductList />} />
+//           <Route path="/product/:id" element={<ProductDetail />} />
+//           <Route path="/cart" element={<Cart />} />
+//         </Routes>
+//       </Router>
+//     </CartProvider>
+//   );
+// }
+
+// export default App;
+
+// ----------------------------- END Mini Ecommerce App--------------------------------
+
+import React, { useState, useCallback } from "react";
+import Child from "./../src/sampleCode/hooks/useCallback";
 
 function App() {
+  const [count, setCount] = useState(0);
+
+  const handleClick = useCallback(() => {
+    console.log("Clicked!");
+  }, []);
+
   return (
-    <CartProvider>
-      <Router>
-        <nav style={{ marginBottom: "20px" }}>
-          <Link to="/">Home</Link> | <Link to="/cart">Cart</Link>
-        </nav>
-        <Routes>
-          <Route path="/" element={<ProductList />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} />
-        </Routes>
-      </Router>
-    </CartProvider>
+    <div>
+      <p>Count: {count}</p>
+      <Child onClick={handleClick} />
+      <button onClick={() => setCount(count + 1)}>Increase</button>
+    </div>
   );
 }
 
 export default App;
+
+// ----------------------------- END useCallback Example--------------------------------
