@@ -3,27 +3,24 @@ import { useAuth } from '../hooks/useAuth';
 import { LoginFormData } from '../types/user.types';
 import '../assets/styles/main.css';
 
+import Heading from '../components/Heading';
+import TextInput from '../components/TextInput';
+import FormMessage from '../components/FormMessage';
+import PrimaryButton from '../components/Button';
+
 const Login: React.FC = () => {
-  const [formData, setFormData] = useState<LoginFormData>({
-    username: '',
-    password: ''
-  });
+  const [formData, setFormData] = useState<LoginFormData>({ username: '', password: '' });
 
   const { isLoading, message, messageType, login } = useAuth();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [id]: value
-    }));
+    setFormData(prev => ({ ...prev, [id]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const success = await login(formData.username.trim(), formData.password);
-
     if (success) {
       window.location.href = '/home';
     }
@@ -32,20 +29,17 @@ const Login: React.FC = () => {
   return (
     <section className="login-wrap">
       <div className="login-container">
-        <h2 className="login-title">Login</h2>
+        <Heading as="h2" size="md" className="login-title" value="Login" />
+
         <form id="login-form" onSubmit={handleSubmit}>
-          <div className="form-group-login">
-            <input type="text" id="username" value={formData.username} onChange={handleInputChange} required placeholder="Email"/>
-          </div>
-          <div className="form-group-login">
-            <input type="password" id="password" value={formData.password} onChange={handleInputChange} required placeholder="Password"/>
-          </div>
-          <div className={`form-message ${messageType}`} style={{ display: message ? 'block' : 'none' }}>
-            {message}
-          </div>
-          <button className="button" type="submit" disabled={isLoading}>
+          <TextInput id="username" value={formData.username} onChange={handleInputChange} placeholder="Email" />
+          <TextInput id="password" type="password" value={formData.password} onChange={handleInputChange} placeholder="Password" />
+
+          <FormMessage message={message} type={messageType} />
+
+          <PrimaryButton type="submit" disabled={isLoading}>
             {isLoading ? 'Logging in...' : 'Login'}
-          </button>
+          </PrimaryButton>
         </form>
       </div>
     </section>
