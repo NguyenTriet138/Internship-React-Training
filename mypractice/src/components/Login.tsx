@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/userAuth';
 import { LoginFormData } from '../types/user.types';
-// import './Login.css';
+import '../assets/styles/main.css';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({
