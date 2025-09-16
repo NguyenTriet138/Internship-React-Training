@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useAuth } from '../hooks/userAuth';
+import { useAuth } from '../hooks/useAuth';
 import { LoginFormData } from '../types/user.types';
 import '../assets/styles/main.css';
 
@@ -25,7 +25,6 @@ const Login: React.FC = () => {
     const success = await login(formData.username.trim(), formData.password);
 
     if (success) {
-      // Redirect to home page
       window.location.href = '/home';
     }
   };
@@ -39,26 +38,12 @@ const Login: React.FC = () => {
             <input type="text" id="username" value={formData.username} onChange={handleInputChange} required placeholder="Email"/>
           </div>
           <div className="form-group-login">
-            <input
-              type="password"
-              id="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              required
-              placeholder="Password"
-            />
+            <input type="password" id="password" value={formData.password} onChange={handleInputChange} required placeholder="Password"/>
           </div>
-          <div
-            className={`form-message ${messageType}`}
-            style={{ display: message ? 'block' : 'none' }}
-          >
+          <div className={`form-message ${messageType}`} style={{ display: message ? 'block' : 'none' }}>
             {message}
           </div>
-          <button
-            className="button"
-            type="submit"
-            disabled={isLoading}
-          >
+          <button className="button" type="submit" disabled={isLoading}>
             {isLoading ? 'Logging in...' : 'Login'}
           </button>
         </form>

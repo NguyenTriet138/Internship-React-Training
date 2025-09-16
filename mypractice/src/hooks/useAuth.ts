@@ -68,16 +68,6 @@ export const useAuth = () => {
     }
   }, [showMessage, clearMessage, setLoading]);
 
-  const logout = useCallback(() => {
-    userModel.logout();
-    setState({
-      isLoading: false,
-      message: '',
-      messageType: 'error',
-      user: null
-    });
-  }, []);
-
   const getCurrentUser = useCallback((): User | null => {
     return userModel.getCurrentUser();
   }, []);
@@ -85,7 +75,6 @@ export const useAuth = () => {
   return {
     ...state,
     login,
-    logout,
     getCurrentUser,
     showMessage,
     clearMessage,
