@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageType } from '../types/user.types';
+import { MessageType } from '../../types/user.types';
 
 type FormMessageProps = {
   message: string;

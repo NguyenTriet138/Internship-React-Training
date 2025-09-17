@@ -3,10 +3,10 @@ import { useAuth } from '../hooks/useAuth';
 import { LoginFormData } from '../types/user.types';
 import '../assets/styles/main.css';
 
-import Heading from '../components/Heading';
-import TextInput from '../components/TextInput';
-import FormMessage from '../components/FormMessage';
-import PrimaryButton from '../components/Button';
+import Heading from '../components/Heading/index';
+import TextInput from '../components/Textfield/index';
+import FormMessage from '../components/Message/index';
+import PrimaryButton from '../components/Button/index';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({ username: '', password: '' });
