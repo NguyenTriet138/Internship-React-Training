@@ -1,14 +1,16 @@
 import { API_CONFIG } from '../config/env';
 
 export class User {
-  id: number;
+  id: string; 
   username: string;
   password: string;
+  role: string;
 
-  constructor(data: { id: number; username: string; password: string; role: string }) {
+  constructor(data: { id: string; username: string; password: string; role: string }) {
     this.id = data.id;
     this.username = data.username;
     this.password = data.password;
+    this.role = data.role;
   }
 
   toJSON(): string {
@@ -16,6 +18,7 @@ export class User {
       id: this.id,
       username: this.username,
       password: this.password,
+      role: this.role,
     });
   }
 
@@ -28,11 +31,15 @@ export class User {
 export class UserModel {
   async login(username: string, password: string): Promise<User | null> {
     try {
-      const res = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.users}?username=${username}&password=${password}`);
+      const res = await fetch(`${API_CONFIG.baseUrl}${API_CONFIG.endpoints.users}`);
       const users = await res.json();
 
-      if (users.length === 1) {
-        return new User(users[0]);
+      const foundUser = users.find(
+        (u: any) => u.username === username && u.password === password
+      );
+
+      if (foundUser) {
+        return new User(foundUser);
       }
 
       return null;
