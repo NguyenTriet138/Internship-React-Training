@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Product } from '../types/product.types';
 import { useProducts } from '../hooks/useProducts';
+import ProductTable from './ProductTable';
 import Heading from '../components/Heading';
 import PrimaryButton from '../components/Button/index';
 import Modal from '../components/Modals/index';
@@ -68,6 +69,15 @@ const Home: React.FC = () => {
       <div className="button-container">
         <PrimaryButton onClick={handleAddProduct}>Add New Product</PrimaryButton>
       </div>
+
+      <ProductTable
+        products={products}
+        loading={loading}
+        onFilter={handleFilter}
+        onEdit={handleEditProduct}
+        onDelete={handleDeleteProduct}
+        onRowClick={handleRowClick}
+      />
 
       {showDeleteConfirm && (
         <Modal
