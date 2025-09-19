@@ -13,12 +13,12 @@ export interface ApiConfig {
 }
 
 /**
- * Default API configuration
+ * Default API configuration for MockAPI
  */
 export const API_CONFIG: ApiConfig = {
-  baseUrl: 'http://localhost:3002',
+  baseUrl: 'https://68ca0a21430c4476c3480ff6.mockapi.io',
   endpoints: {
     products: '/products',
-    users: '/users'
-  }
+    users: '/users',
+  },
 } as const;
