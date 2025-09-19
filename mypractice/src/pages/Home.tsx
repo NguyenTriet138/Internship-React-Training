@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Product } from '../types/product.types';
 import { useProducts } from '../hooks/useProducts';
 import ProductTable from './ProductTable';
+import Pagination from './Pagination';
 import Heading from '../components/Heading';
 import PrimaryButton from '../components/Button/index';
 import Modal from '../components/Modals/index';
@@ -78,6 +79,17 @@ const Home: React.FC = () => {
         onDelete={handleDeleteProduct}
         onRowClick={handleRowClick}
       />
+
+      {!loading && products.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalItems={totalItems}
+          itemsPerPage={itemsPerPage}
+          onPageChange={handlePageChange}
+          onItemsPerPageChange={handleItemsPerPageChange}
+        />
+      )}
 
       {showDeleteConfirm && (
         <Modal
