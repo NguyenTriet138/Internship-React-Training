@@ -3,10 +3,10 @@ import { Product } from '../types/product.types';
 import { useProducts } from '../hooks/useProducts';
 import ProductTable from './ProductTable';
 import Pagination from './Pagination';
-import Heading from '../Share/Components/Heading';
-import PrimaryButton from '../Share/Components/Button/index';
+import Heading from '../share/Components/Heading';
+import PrimaryButton from '../share/Components/Button/index';
 import Modal from '../components/Modals/index';
-import ErrorMessage from '../components/ErrorMessage';
+import ErrorMessage from '../share/Components/ErrorMessage';
 import '../../src/assets/styles/main.css';
 
 const Home: React.FC = () => {

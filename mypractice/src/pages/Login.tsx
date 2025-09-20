@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 import { LoginFormData } from '../types/user.types';
 import '../assets/styles/main.css';
 
-import Heading from '../Share/Components/Heading/index';
-import TextInput from '../Share/Components/Textfield/index';
+import Heading from '../share/Components/Heading/index';
+import TextInput from '../share/Components/Textfield/index';
 import FormMessage from '../components/Message/index';
-import PrimaryButton from '../Share/Components/Button/index';
-
+import PrimaryButton from '../share/Components/Button/index';
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({ username: '', password: '' });
+  const navigate = useNavigate();
 
   const { isLoading, message, messageType, login } = useAuth();
 
@@ -22,7 +23,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     const success = await login(formData.username.trim(), formData.password);
     if (success) {
-      window.location.href = '/home';
+      navigate("/home");
     }
   };
 

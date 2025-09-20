@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from './pages/Login';
 import Home from './pages/Home';
-// import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   // TODO: Add routing logic here
@@ -10,7 +10,13 @@ function App() {
 
   return (
     <div className="App">
-        {showHomePage ? <Home /> : <Login />}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/home" element={<Home />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
