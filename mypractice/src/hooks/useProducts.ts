@@ -33,6 +33,14 @@ export const useProducts = () => {
     }
   }, []);
 
+  const deleteProduct = useCallback(async (id: string): Promise<void> => {
+    try {
+      await productService.deleteProduct(id);
+    } catch (err) {
+      throw new Error(err instanceof Error ? err.message : 'Failed to delete product');
+    }
+  }, []);
+
   const loadProducts = useCallback(async (filters?: ProductFilter, page: number = 1, items: number = 10) => {
     try {
       setLoading(true);
@@ -107,6 +115,7 @@ export const useProducts = () => {
     currentFilters,
     createProduct,
     updateProduct,
+    deleteProduct,
     handleFilter,
     handlePageChange,
     handleItemsPerPageChange,

@@ -1,13 +1,12 @@
 import React, { useRef } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-// import Modal from "react-modal";
 import * as Yup from 'yup';
 import { useProducts } from '../../hooks/useProducts';
-import { Product, ProductStatus, ProductType } from '../../types/product.types';
+import { ProductStatus, ProductType } from '../../types/product.types';
 import '../../assets/styles/main.css';
 import Modal from '../../components/Modals/index';
 import { toast } from "react-toastify";
-import PrimaryButton from '../../share/Components/Button/index';
+import Button from '../../share/Components/Button/index';
 
 interface ProductFormValues {
   productName: string;
@@ -22,10 +21,11 @@ interface ProductFormValues {
 
 const ProductModal: React.FC<{
   mode?: 'add' | 'edit';
+  productId?: string;
   initialValues?: Partial<ProductFormValues>;
   onClose: () => void;
   onSave: (values: ProductFormValues) => void;
-}> = ({ mode = 'add', initialValues, onClose, onSave }) => {
+}> = ({ mode = 'add', productId, initialValues, onClose, onSave }) => {
   const defaultValues: ProductFormValues = {
     productName: '',
     productQuantity: 0,
@@ -38,10 +38,9 @@ const ProductModal: React.FC<{
     ...initialValues,
   };
 
-  const { createProduct, updateProduct, products } = useProducts();
+  const { createProduct, updateProduct } = useProducts();
   const inputRef = useRef<HTMLInputElement>(null);
   const inputRefBrandImg = useRef<HTMLInputElement>(null);
-  // const [open, setOpen] = React.useState(true);
 
   const validationSchema = Yup.object({
     productName: Yup.string().required('Name is required'),
@@ -62,10 +61,9 @@ const ProductModal: React.FC<{
       <Formik
         initialValues={defaultValues}
         validationSchema={validationSchema}
-        onSubmit={(values) => {
+        onSubmit={async (values) => {
           try {
-            console.log('Form values:', values);
-            createProduct({
+            const productData = {
               name: values.productName,
               quantity: values.productQuantity,
               price: values.productPrice,
@@ -74,13 +72,24 @@ const ProductModal: React.FC<{
               brand: values.brandName,
               productImage: values.productImage,
               brandImage: values.brandImage,
-            });
-            toast.success("Upload successful!", {
-              position: "top-center"
-            });
+            };
+
+            if (mode === 'edit' && productId) {
+              await updateProduct(productId, productData);
+              toast.success("Product updated successfully!", {
+                position: "top-center"
+              });
+            } else {
+              await createProduct(productData);
+              toast.success("Product created successfully!", {
+                position: "top-center"
+              });
+            }
+
             onClose();
+            onSave(values);
           } catch (error) {
-            toast.error("Create product failed!", {
+            toast.error(mode === 'edit' ? "Update product failed!" : "Create product failed!", {
               position: "top-center"
             });
           }
@@ -96,7 +105,6 @@ const ProductModal: React.FC<{
                 onChange={(e) => {
                   const file = e.target.files?.[0];
                   if (!file) return;
-                  console.log('Selected file:', file);
                   setFieldValue('productImage', URL.createObjectURL(file));
 
                   const form = new FormData();
@@ -109,7 +117,7 @@ const ProductModal: React.FC<{
               </input>
 
               <div
-                onClick={(e) => {
+                onClick={() => {
                   const inputImage = inputRef.current;
 
                   if (inputImage !== null) {
@@ -214,7 +222,6 @@ const ProductModal: React.FC<{
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (!file) return;
-                      console.log('Selected file:', file);
                       setFieldValue('brandImage', URL.createObjectURL(file));
 
                       const form = new FormData();
@@ -229,7 +236,7 @@ const ProductModal: React.FC<{
                   <button
                     type="button"
                     className="upload-btn"
-                    onClick={(e) => {
+                    onClick={() => {
                       const inputImage = inputRefBrandImg.current;
 
                       if (inputImage !== null) {
@@ -247,12 +254,12 @@ const ProductModal: React.FC<{
 
             {/* Actions */}
             <div className="action-buttons modal-active">
-              <PrimaryButton type="button" className="secondary-btn" onClick={onClose}>
+              <Button type="button" className="secondary-btn" onClick={onClose}>
                 Cancel
-              </PrimaryButton>
-              <PrimaryButton type="submit" className="primary-btn">
+              </Button>
+              <Button type="submit" className="primary-btn">
                 Confirm
-              </PrimaryButton>
+              </Button>
             </div>
           </Form>
         )}

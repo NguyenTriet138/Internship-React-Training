@@ -7,7 +7,8 @@ import '../../assets/styles/main.css';
 import Heading from '../../share/Components/Heading/index';
 import TextInput from '../../share/Components/Textfield/index';
 import FormMessage from '../../components/Message/index';
-import PrimaryButton from '../../share/Components/Button/index';
+import Button from '../../share/Components/Button/index';
+
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({ username: '', password: '' });
   const navigate = useNavigate();
@@ -38,9 +39,9 @@ const Login: React.FC = () => {
 
           <FormMessage message={message} type={messageType} />
 
-          <PrimaryButton type="submit" disabled={isLoading}>
+          <Button type="submit" disabled={isLoading}>
             {isLoading ? 'Logging in...' : 'Login'}
-          </PrimaryButton>
+          </Button>
         </form>
       </div>
     </section>
