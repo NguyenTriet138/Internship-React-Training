@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { LoginFormData } from '../../types/user.types';
 import '../../assets/styles/main.css';
 
-import Heading from '../../share/Components/Heading/index';
-import TextInput from '../../share/Components/Textfield/index';
+import Heading from '../../Share/Components/Heading/index';
+import TextInput from '../../Share/Components/Textfield/index';
 import FormMessage from '../../components/Message/index';
-import Button from '../../share/Components/Button/index';
+import Button from '../../Share/Components/Button/index';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({ username: '', password: '' });

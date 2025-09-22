@@ -6,7 +6,7 @@ import { ProductStatus, ProductType } from '../../types/product.types';
 import '../../assets/styles/main.css';
 import Modal from '../../components/Modals/index';
 import { toast } from "react-toastify";
-import Button from '../../share/Components/Button/index';
+import Button from '../../Share/Components/Button/index';
 
 interface ProductFormValues {
   productName: string;

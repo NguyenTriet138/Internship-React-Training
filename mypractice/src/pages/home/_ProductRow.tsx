@@ -2,7 +2,7 @@ import React from 'react';
 import { Product } from '../../types/product.types';
 import ImageInfo from '../../components/ImageInfo/index';
 import StatusBadge from '../../components/StatusBadge/index';
-import ActionMenu from '../../share/Components/ActionMenu/index';
+import ActionMenu from '../../Share/Components/ActionMenu/index';
 
 interface ProductRowProps {
   product: Product;
