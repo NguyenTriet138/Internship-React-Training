@@ -8,7 +8,9 @@
 /* 4. Components */
 @import './components/button.css';
 @import './components/text.css';
+@import './components/heading.css';
 
 /* 5. Layout */
 @import './pages/login-style.css';
 @import './pages/home-style.css';
+@import './pages/product-style.css';

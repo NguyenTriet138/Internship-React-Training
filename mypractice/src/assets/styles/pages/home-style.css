@@ -8,8 +8,6 @@
 }
 
 .header-title {
-  font-size: var(--fs-title-xl);
-  font-weight: var(--fw-bold);
   width: 100%;
   color: var(--clr-header);
   margin-bottom: 45px;

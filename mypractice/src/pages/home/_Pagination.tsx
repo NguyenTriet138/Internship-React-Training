@@ -1,7 +1,7 @@
 import React from 'react';
-import PaginationInfo from '../components/Pagination/PaginationInfo';
-import ItemsPerPageSelect from '../components/Pagination/ItemsPerPage';
-import PaginationControls from '../components/Pagination/PaginationControls';
+import PaginationInfo from '../../components/Pagination/PaginationInfo';
+import ItemsPerPageSelect from '../../components/Pagination/ItemsPerPage';
+import PaginationControls from '../../components/Pagination/PaginationControls';
 
 interface PaginationProps {
   currentPage: number;

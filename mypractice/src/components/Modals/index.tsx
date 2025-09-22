@@ -1,18 +1,19 @@
 import React from 'react';
+import Heading from '../../share/Components/Heading/index';
 
 type ModalProps = {
   title: string;
   children: React.ReactNode;
   onClose: () => void;
   footer?: React.ReactNode;
+  isActive?: boolean;
 };
-
-const Modal: React.FC<ModalProps> = ({ title, children, onClose, footer }) => {
+const Modal: React.FC<ModalProps> = ({ title, children, onClose, footer, isActive = false }) => {
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div className={`modal-overlay ${isActive && 'active'}`} onClick={onClose}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h3>{title}</h3>
+          <Heading as="h2" size="md" value={title} />
           <button className="close-btn" onClick={onClose}>
             ×
           </button>

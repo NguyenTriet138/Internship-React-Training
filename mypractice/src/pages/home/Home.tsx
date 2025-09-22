@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { Product } from '../types/product.types';
-import { useProducts } from '../hooks/useProducts';
-import ProductTable from './ProductTable';
-import Pagination from './Pagination';
-import Heading from '../share/Components/Heading';
-import PrimaryButton from '../share/Components/Button/index';
-import Modal from '../components/Modals/index';
-import ErrorMessage from '../share/Components/ErrorMessage';
-import '../../src/assets/styles/main.css';
+import { Product } from '../../types/product.types';
+import { useProducts } from '../../hooks/useProducts';
+import ProductTable from './_ProductTable';
+import Pagination from './_Pagination';
+import Heading from '../../share/Components/Heading';
+import PrimaryButton from '../../share/Components/Button/index';
+import Modal from '../../components/Modals/index';
+import ErrorMessage from '../../share/Components/ErrorMessage';
+import '../../../src/assets/styles/main.css';
+import ProductForm from './_ProductForm';
 
 const Home: React.FC = () => {
   const {
@@ -26,11 +27,11 @@ const Home: React.FC = () => {
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showCreateProduct, setShowCreateProduct] = useState(false);
   const [productToDelete, setProductToDelete] = useState<string | null>(null);
 
   const handleAddProduct = () => {
-    // TODO: Open add product modal
-    console.log('Add product clicked');
+    setShowCreateProduct(true);
   };
 
   const handleEditProduct = (id: string) => {
@@ -63,9 +64,7 @@ const Home: React.FC = () => {
 
   return (
     <main className="container">
-      <header>
-        <Heading as="h1" size="lg" className="header-title" value="Management" />
-      </header>
+      <Heading as="h1" size="lg" className="header-title" value="Management" />
 
       <div className="button-container">
         <PrimaryButton onClick={handleAddProduct}>Add New Product</PrimaryButton>
@@ -108,6 +107,18 @@ const Home: React.FC = () => {
         >
           <p>Are you sure you want to delete this product? This action cannot be undone.</p>
         </Modal>
+      )}
+
+      {showCreateProduct && (
+        <ProductForm
+          // open={showCreateProduct}
+          mode="add"
+          onClose={() => setShowCreateProduct(false)}
+          onSave={(values) => {
+            console.log('Save product:', values);
+            setShowCreateProduct(false);
+          }}
+        />
       )}
     </main>
   );

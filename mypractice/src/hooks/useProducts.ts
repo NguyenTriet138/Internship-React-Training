@@ -15,6 +15,24 @@ export const useProducts = () => {
 
   const productService = new ProductService();
 
+  const createProduct = useCallback(async (data: SaveProductDataRequest): Promise<Product> => {
+    try {
+      const newProduct = await productService.createProduct(data);
+      return newProduct;
+    } catch (err) {
+      throw new Error(err instanceof Error ? err.message : 'Failed to create product');
+    }
+  }, []);
+
+  const updateProduct = useCallback(async (id: string, data: SaveProductDataRequest): Promise<Product> => {
+    try {
+      const updatedProduct = await productService.updateProduct(id, data);
+      return updatedProduct;
+    } catch (err) {
+      throw new Error(err instanceof Error ? err.message : 'Failed to update product');
+    }
+  }, []);
+
   const loadProducts = useCallback(async (filters?: ProductFilter, page: number = 1, items: number = 10) => {
     try {
       setLoading(true);
@@ -87,6 +105,8 @@ export const useProducts = () => {
     totalItems,
     totalPages,
     currentFilters,
+    createProduct,
+    updateProduct,
     handleFilter,
     handlePageChange,
     handleItemsPerPageChange,
