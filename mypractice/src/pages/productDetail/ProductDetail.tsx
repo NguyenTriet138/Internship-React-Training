@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Formik, Form, Field, ErrorMessage as FormikError } from 'formik';
 import * as Yup from 'yup';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Product, ProductStatus, ProductType } from '../../types/product.types';
-import { useProducts } from '../../hooks/useProducts';
-import Heading from '../../Share/Components/Heading';
-import ErrorMessage from '../../Share/Components/ErrorMessage';
+import { Product, ProductStatus, ProductType } from 'types/product.types';
+import { useProducts } from '@hooks/useProducts';
+import Heading from '@share/Components/Heading';
+import ErrorMessage from '@share/Components/ErrorMessage';
 import { toast } from 'react-toastify';
-import Button from '../../Share/Components/Button';
-import '../../assets/styles/pages/product-style.css';
+import Button from '@share/Components/Button';
+import '@assets/styles/pages/product-style.css';
 
 interface ProductFormValues {
   name: string;

@@ -1,4 +1,4 @@
-import { API_CONFIG } from '../config/env';
+import { API_CONFIG } from '@config/env';
 
 export class User {
   id: string; 

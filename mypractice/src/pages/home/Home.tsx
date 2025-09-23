@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Product, ProductFilter, ProductStatus, ProductType } from '../../types/product.types';
-import { useProducts } from '../../hooks/useProducts';
+import { Product, ProductFilter, ProductStatus, ProductType } from 'types/product.types';
+import { useProducts } from '@hooks/useProducts';
 import ProductTable from './_ProductTable';
 import Pagination from './_Pagination';
-import Heading from '../../Share/Components/Heading';
-import Button from '../../Share/Components/Button/index';
-import Modal from '../../components/Modals/index';
-import ErrorMessage from '../../Share/Components/ErrorMessage';
-import '../../../src/assets/styles/main.css';
+import Heading from '@share/Components/Heading';
+import Button from '@share/Components/Button/index';
+import Modal from '@components/Modals/index';
+import ErrorMessage from '@share/Components/ErrorMessage';
+import '@assets/styles/main.css';
 import ProductForm from './_ProductForm';
 import { toast } from "react-toastify";
 

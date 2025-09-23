@@ -1,10 +1,10 @@
 import React from 'react';
-import Login from './pages/login/Login';
-import Home from './pages/home/Home';
+import Login from '@pages/login/Login';
+import Home from '@pages/home/Home';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
-import ProductDetail from './pages/productDetail/ProductDetail';
-import ProtectedRoute from './components/ProtectedRoute/index';
+import ProductDetail from '@pages/productDetail/ProductDetail';
+import ProtectedRoute from '@components/ProtectedRoute/index';
 
 function App() {
   return (

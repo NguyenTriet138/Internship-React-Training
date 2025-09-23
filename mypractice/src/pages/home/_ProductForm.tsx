@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useProducts } from '../../hooks/useProducts';
-import { ProductStatus, ProductType } from '../../types/product.types';
-import '../../assets/styles/main.css';
-import Modal from '../../components/Modals/index';
+import { useProducts } from '@hooks/useProducts';
+import { ProductStatus, ProductType } from 'types/product.types';
+import '@assets/styles/main.css';
+import Modal from '@components/Modals/index';
 import { toast } from "react-toastify";
-import Button from '../../Share/Components/Button/index';
+import Button from '@share/Components/Button/index';
 
 interface ProductFormValues {
   productName: string;
