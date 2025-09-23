@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Product } from '../../types/product.types';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import { Product, ProductFilter, ProductStatus, ProductType } from '../../types/product.types';
 import { useProducts } from '../../hooks/useProducts';
 import ProductTable from './_ProductTable';
 import Pagination from './_Pagination';
@@ -30,6 +30,7 @@ const Home: React.FC = () => {
   } = useProducts();
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -132,11 +133,7 @@ const Home: React.FC = () => {
   };
 
   const handleRowClick = (product: Product) => {
-    // TODO: Open product detail page
-    // After click product's row, will navigate to product detail page
-    // navigate(`/products/${product.id}`);
-    setSelectedProduct(product);
-    console.log('Product clicked:', product);
+    navigate(`/productdetail/${product.id}?name=${encodeURIComponent(product.name)}`);
   };
 
   const closeModals = () => {
