@@ -87,14 +87,6 @@ const ProductDetail: React.FC = () => {
     loadProduct();
   }, [id, getProductById]);
 
-  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-  //   const { name, value } = e.target;
-  //   setFormData((prev) => ({
-  //     ...prev,
-  //     [name]: name === 'quantity' || name === 'price' ? Number(value) : value,
-  //   }));
-  // };
-
   const handleSave = async (values: ProductFormValues) => {
     if (!product) return;
     try {
@@ -123,7 +115,16 @@ const ProductDetail: React.FC = () => {
     }
   };
 
-  const handleBack = () => navigate('/home');
+  const handleBack = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const returnUrl = urlParams.get('returnUrl');
+
+    if (returnUrl) {
+      navigate(decodeURIComponent(returnUrl));
+    } else {
+      navigate('/home');
+    }
+  };
 
   const handleProductImageUpload = (
     e: React.ChangeEvent<HTMLInputElement>,

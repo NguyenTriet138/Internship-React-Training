@@ -32,7 +32,6 @@ const Home: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [showCreateProduct, setShowCreateProduct] = useState(false);
   const [showEditProduct, setShowEditProduct] = useState(false);
@@ -76,7 +75,6 @@ const Home: React.FC = () => {
   const handleEditProduct = async (id: string) => {
     try {
       const product = await getProductById(id);
-      // Update URL with edit parameters
       setSearchParams({
         todo: 'edit',
         id: id,
@@ -92,7 +90,6 @@ const Home: React.FC = () => {
   const handleDeleteProduct = (id: string) => {
     const product = products.find(p => p.id === id);
     if (product) {
-      // Update URL with delete parameters
       setSearchParams({
         todo: 'delete',
         id: id,
@@ -130,15 +127,56 @@ const Home: React.FC = () => {
   };
 
   const handleRowClick = (product: Product) => {
-    navigate(`/productdetail/${product.id}?name=${encodeURIComponent(product.name)}`);
+    const currentParams = new URLSearchParams();
+    if (currentPage > 1) {
+      currentParams.set('page', currentPage.toString());
+    }
+    if (itemsPerPage !== 10) {
+      currentParams.set('items', itemsPerPage.toString());
+    }
+    const returnUrl = `/home${currentParams.toString() ? '?' + currentParams.toString() : ''}`;
+    navigate(`/productdetail/${product.id}?name=${encodeURIComponent(product.name)}&returnUrl=${encodeURIComponent(returnUrl)}`);
   };
 
   const closeModals = () => {
     setShowEditProduct(false);
     setShowCreateProduct(false);
     setEditingProduct(null);
-    // Clear URL parameters when closing modals
-    setSearchParams({});
+    updateURLParams(currentPage, itemsPerPage);
+  };
+
+  const handlePageChangeWithURL = (page: number) => {
+    updateURLParams(page, itemsPerPage);
+    handlePageChange(page);
+  };
+
+  const handleItemsPerPageChangeWithURL = (items: number) => {
+    updateURLParams(1, items); // Reset to page 1 when changing items per page
+    handleItemsPerPageChange(items);
+  };
+
+  // Helper function to update URL parameters
+  const updateURLParams = (page: number, items: number) => {
+    const newSearchParams: any = {};
+
+    // Preserve existing non-filter parameters (like todo, id, name for edit/delete)
+    const existingTodo = searchParams.get('todo');
+    const existingId = searchParams.get('id');
+    const existingName = searchParams.get('name');
+
+    if (existingTodo) newSearchParams.todo = existingTodo;
+    if (existingId) newSearchParams.id = existingId;
+    if (existingName) newSearchParams.name = existingName;
+
+    // Add pagination parameters
+    if (page > 1) {
+      newSearchParams.page = page.toString();
+    }
+    if (items !== 10) { // Only add if different from default
+      newSearchParams.items = items.toString();
+    }
+    // Update URL with new parameters
+    setSearchParams(newSearchParams);
   };
 
   if (error) {
@@ -172,8 +210,8 @@ const Home: React.FC = () => {
           totalPages={totalPages}
           totalItems={totalItems}
           itemsPerPage={itemsPerPage}
-          onPageChange={handlePageChange}
-          onItemsPerPageChange={handleItemsPerPageChange}
+          onPageChange={handlePageChangeWithURL}
+          onItemsPerPageChange={handleItemsPerPageChangeWithURL}
         />
       )}
 
