@@ -84,7 +84,6 @@ const Home: React.FC = () => {
       });
       setEditingProduct(product);
       setShowEditProduct(true);
-      console.log('Edit product:', id);
     } catch (error) {
       console.error('Failed to load product for editing:', error);
     }
@@ -122,9 +121,7 @@ const Home: React.FC = () => {
         toast.success("Product deleted successfully!", {
           position: "top-center"
         });
-        console.log('Product deleted successfully');
       } catch (error) {
-        console.error('Failed to delete product:', error);
         toast.error("Failed to delete product!", {
           position: "top-center"
         });

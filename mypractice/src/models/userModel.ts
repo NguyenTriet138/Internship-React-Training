@@ -44,7 +44,6 @@ export class UserModel {
 
       return null;
     } catch (error) {
-      console.error('Login failed:', error);
       throw error;
     }
   }

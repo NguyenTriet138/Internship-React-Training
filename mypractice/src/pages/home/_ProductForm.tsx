@@ -53,7 +53,7 @@ const ProductModal: React.FC<{
 
   return (
     <Modal
-      title={mode === 'add' ? 'Add New Product' : 'Edit Product'}
+      title={mode === 'add' ? 'Add New Product' : 'Products Information'}
       isActive={true}
       onClose={onClose}
     >
