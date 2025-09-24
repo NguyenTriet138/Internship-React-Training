@@ -3,10 +3,10 @@ import { useAuth } from '@hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { LoginFormData } from 'types/user.types';
 import '@assets/styles/main.css';
-import Heading from '@share/Components/Heading/index';
-import TextInput from '@share/Components/Textfield/index';
-import FormMessage from '@components/Message/index';
-import Button from '@share/Components/Button/index';
+import Heading from 'share/components/heading/index';
+import TextInput from 'share/components/textfield/index';
+import FormMessage from '@components/message/index';
+import Button from 'share/components/button/index';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({ username: '', password: '' });

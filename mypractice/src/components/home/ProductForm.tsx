@@ -4,9 +4,9 @@ import * as Yup from 'yup';
 import { useProducts } from '@hooks/useProducts';
 import { ProductStatus, ProductType } from 'types/product.types';
 import '@assets/styles/main.css';
-import Modal from '@components/Modals/index';
+import Modal from '@components/modals/index';
 import { toast } from "react-toastify";
-import Button from '@share/Components/Button/index';
+import Button from 'share/components/button/index';
 
 interface ProductFormValues {
   productName: string;

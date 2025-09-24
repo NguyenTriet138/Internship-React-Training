@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { UserModel } from "../../models/userModel";
+import { UserModel } from "@models/userModel";
 
 const userModel = new UserModel();
 

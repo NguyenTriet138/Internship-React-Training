@@ -1,5 +1,5 @@
 import React from 'react';
-import PageNumbers from './PageNumber';
+import PageNumbers from '@components/pagination/PageNumber';
 
 type PaginationControlsProps = {
   currentPage: number;
