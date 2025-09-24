@@ -7,6 +7,7 @@
   border: 1px solid var(--clr-btn);
   font-weight: var(--fw-normal);
   box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+  cursor: pointer;
 }
 
 .button:hover {
@@ -38,4 +39,10 @@
 .button.primary-btn,
 .button.secondary-btn {
   width: 100%;
+}
+
+.button:disabled {
+  opacity: 0.35;        /* làm mờ */
+  cursor: not-allowed; /* đổi con trỏ chuột */
+  pointer-events: none; /* chặn hover và click */
 }

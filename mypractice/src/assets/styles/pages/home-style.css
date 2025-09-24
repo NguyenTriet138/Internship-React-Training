@@ -66,6 +66,7 @@
 
 .product-filter:focus {
   outline: none;
+  cursor: pointer;
 }
 
 .product-table tbody tr {
@@ -405,6 +406,7 @@
   border-radius: 6px;
   background-color: var(--clr-bg);
   font-size: var(--fs-lg);
+  cursor: pointer;
 }
 
 .pagination-buttons {
