@@ -43,12 +43,15 @@ const ProductModal: React.FC<{
   const inputRefBrandImg = useRef<HTMLInputElement>(null);
 
   const validationSchema = Yup.object({
-    productName: Yup.string().required('Name is required'),
-    productQuantity: Yup.number().required('Quantity is required').min(0),
-    productPrice: Yup.number().required('Price is required').min(0),
-    productStatus: Yup.string().required(),
-    productType: Yup.string().required(),
-    brandName: Yup.string().required('Brand is required'),
+    productName: Yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+    productQuantity: Yup.number()
+      .required('Quantity is required')
+      .min(0, 'Quantity must be 0 or greater')
+      .integer('Quantity must be an integer'),
+    productPrice: Yup.number().required('Price is required').min(0, 'Price must be 0 or greater'),
+    productStatus: Yup.string().required('Status is required'),
+    productType: Yup.string().required('Type is required'),
+    brandName: Yup.string().required('Brand is required').min(2, 'Brand must be at least 2 characters'),
   });
 
   return (
