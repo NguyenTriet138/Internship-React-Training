@@ -66,6 +66,12 @@ export const useProducts = () => {
     }
   }, []);
 
+  const initializePagination = useCallback(async (page: number, items: number) => {
+    setCurrentPage(page);
+    setItemsPerPage(items);
+    await loadProducts(currentFilters, page, items);
+  }, [currentFilters, loadProducts]);
+
   const handleFilter = useCallback(async (filters: ProductFilter) => {
     setCurrentFilters(filters);
     setCurrentPage(1);
@@ -100,9 +106,9 @@ export const useProducts = () => {
     }
   }, []);
 
-  useEffect(() => {
-    loadProducts();
-  }, []);
+  // useEffect(() => {
+  //   loadProducts();
+  // }, []);
 
   return {
     products,
@@ -121,6 +127,7 @@ export const useProducts = () => {
     handleItemsPerPageChange,
     getProductById,
     checkProductExists,
-    refreshProducts: () => loadProducts(currentFilters, currentPage, itemsPerPage)
+    refreshProducts: () => loadProducts(currentFilters, currentPage, itemsPerPage),
+    initializePagination,
   };
 };

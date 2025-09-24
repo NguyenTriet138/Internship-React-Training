@@ -27,6 +27,7 @@ const Home: React.FC = () => {
     getProductById,
     refreshProducts,
     deleteProduct,
+    initializePagination,
   } = useProducts();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -48,6 +49,16 @@ const Home: React.FC = () => {
       handleDeleteProductFromURL(productId);
     }
   }, [searchParams]);
+
+  useEffect(() => {
+  const pageParam = searchParams.get("page");
+  const itemsParam = searchParams.get("items");
+
+  const pageFromUrl = pageParam ? Number(pageParam) : 1;
+  const itemsFromUrl = itemsParam ? Number(itemsParam) : 10;
+
+  initializePagination(pageFromUrl, itemsFromUrl);
+}, []);
 
   const handleEditProductFromURL = async (id: string) => {
     try {
