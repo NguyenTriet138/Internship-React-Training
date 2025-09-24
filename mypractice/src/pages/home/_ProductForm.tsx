@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useProducts } from '../../hooks/useProducts';
-import { ProductStatus, ProductType } from '../../types/product.types';
-import '../../assets/styles/main.css';
-import Modal from '../../components/Modals/index';
+import { useProducts } from '@hooks/useProducts';
+import { ProductStatus, ProductType } from 'types/product.types';
+import '@assets/styles/main.css';
+import Modal from '@components/Modals/index';
 import { toast } from "react-toastify";
-import Button from '../../Share/Components/Button/index';
+import Button from '@share/Components/Button/index';
 
 interface ProductFormValues {
   productName: string;
@@ -53,7 +53,7 @@ const ProductModal: React.FC<{
 
   return (
     <Modal
-      title={mode === 'add' ? 'Add New Product' : 'Edit Product'}
+      title={mode === 'add' ? 'Add New Product' : 'Products Information'}
       isActive={true}
       onClose={onClose}
     >
@@ -225,7 +225,7 @@ const ProductModal: React.FC<{
                       setFieldValue('brandImage', URL.createObjectURL(file));
 
                       const form = new FormData();
-                      form.append('file', file); // backend reads "file"
+                      form.append('file', file);
                     }}
                     className="upload-area"
                     style={{ display: 'none' }}

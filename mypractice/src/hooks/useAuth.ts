@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { LoginState, MessageType } from '../types/user.types';
-import { UserModel, User } from '../models/userModel';
+import { LoginState, MessageType } from 'types/user.types';
+import { UserModel, User } from '@models/userModel';
 
 const userModel = new UserModel();
 

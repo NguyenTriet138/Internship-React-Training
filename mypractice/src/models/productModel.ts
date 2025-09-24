@@ -1,6 +1,6 @@
-import { ProductData, Product, ProductFilter, SaveProductDataRequest } from '../types/product.types';
-import { PaginatedResult } from '../types/pagination.types';
-import { API_CONFIG } from '../config/env';
+import { ProductData, Product, ProductFilter, SaveProductDataRequest } from 'types/product.types';
+import { PaginatedResult } from 'types/pagination.types';
+import { API_CONFIG } from '@config/env';
 
 export class ProductService {
   private readonly baseUrl: string;

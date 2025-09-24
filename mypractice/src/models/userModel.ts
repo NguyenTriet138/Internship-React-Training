@@ -1,4 +1,4 @@
-import { API_CONFIG } from '../config/env';
+import { API_CONFIG } from '@config/env';
 
 export class User {
   id: string; 
@@ -44,7 +44,6 @@ export class UserModel {
 
       return null;
     } catch (error) {
-      console.error('Login failed:', error);
       throw error;
     }
   }

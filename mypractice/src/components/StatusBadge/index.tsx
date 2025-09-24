@@ -1,5 +1,5 @@
 import React from 'react';
-import { ProductStatus } from '../../types/product.types';
+import { ProductStatus } from 'types/product.types';
 
 type StatusBadgeProps = {
   status: ProductStatus;

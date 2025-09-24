@@ -1,8 +1,8 @@
 import React from 'react';
-import { Product } from '../../types/product.types';
-import ImageInfo from '../../components/ImageInfo/index';
-import StatusBadge from '../../components/StatusBadge/index';
-import ActionMenu from '../../Share/Components/ActionMenu/index';
+import { Product } from 'types/product.types';
+import ImageInfo from '@components/ImageInfo/index';
+import StatusBadge from '@components/StatusBadge/index';
+import ActionMenu from '@share/Components/ActionMenu/index';
 
 interface ProductRowProps {
   product: Product;
@@ -49,7 +49,7 @@ const ProductRow: React.FC<ProductRowProps> = ({
       <td>
         <span className="product-price">{product.formatPrice()}</span>
       </td>
-      <td>
+      <td onClick={(e) => e.stopPropagation()}>
         <ActionMenu
           onEdit={() => onEdit(product.id)}
           onDelete={() => onDelete(product.id)}

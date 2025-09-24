@@ -1,10 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import { Product, ProductFilter, ProductStatus, ProductType } from '../../types/product.types';
+import { Product, ProductFilter, ProductStatus, ProductType } from 'types/product.types';
 import ProductRow from './_ProductRow';
-import FilterInput from '../../components/FilterInput';
-import FilterSelect from '../../components/FilterSelect';
-import TableEmptyState from '../../components/TableEmptyState';
-import TableLoading from '../../components/TableLoading';
+import FilterInput from '@components/FilterInput';
+import FilterSelect from '@components/FilterSelect';
+import TableEmptyState from '@components/TableEmptyState';
+import TableLoading from '@components/TableLoading';
 
 interface ProductTableProps {
   products: Product[];
@@ -13,6 +13,7 @@ interface ProductTableProps {
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
   onRowClick: (product: Product) => void;
+  initialFilters?: ProductFilter;
 }
 
 const ProductTable: React.FC<ProductTableProps> = ({
@@ -22,8 +23,9 @@ const ProductTable: React.FC<ProductTableProps> = ({
   onEdit,
   onDelete,
   onRowClick,
+  initialFilters = {},
 }) => {
-  const [filters, setFilters] = useState<ProductFilter>({});
+  const [filters, setFilters] = useState<ProductFilter>(initialFilters);
   const [filterTimeout, setFilterTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const handleFilterChange = useCallback(

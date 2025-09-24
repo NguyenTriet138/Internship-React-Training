@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Product, ProductFilter, SaveProductDataRequest } from '../types/product.types';
-import { PaginatedResult } from '../types/pagination.types';
-import { ProductService } from '../models/productModel';
+import { useState, useCallback } from 'react';
+import { Product, ProductFilter, SaveProductDataRequest } from 'types/product.types';
+import { PaginatedResult } from 'types/pagination.types';
+import { ProductService } from '@models/productModel';
 
 export const useProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -66,6 +66,13 @@ export const useProducts = () => {
     }
   }, []);
 
+  const initializeWithFilters = useCallback(async (filters: ProductFilter, page: number, items: number) => {
+    setCurrentFilters(filters);
+    setCurrentPage(page);
+    setItemsPerPage(items);
+    await loadProducts(filters, page, items);
+  }, [loadProducts]);
+
   const handleFilter = useCallback(async (filters: ProductFilter) => {
     setCurrentFilters(filters);
     setCurrentPage(1);
@@ -100,10 +107,6 @@ export const useProducts = () => {
     }
   }, []);
 
-  useEffect(() => {
-    loadProducts();
-  }, []);
-
   return {
     products,
     loading,
@@ -121,6 +124,7 @@ export const useProducts = () => {
     handleItemsPerPageChange,
     getProductById,
     checkProductExists,
-    refreshProducts: () => loadProducts(currentFilters, currentPage, itemsPerPage)
+    refreshProducts: () => loadProducts(currentFilters, currentPage, itemsPerPage),
+    initializeWithFilters,
   };
 };
