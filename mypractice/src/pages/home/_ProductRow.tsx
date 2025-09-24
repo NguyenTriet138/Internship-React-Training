@@ -49,7 +49,7 @@ const ProductRow: React.FC<ProductRowProps> = ({
       <td>
         <span className="product-price">{product.formatPrice()}</span>
       </td>
-      <td>
+      <td onClick={(e) => e.stopPropagation()}>
         <ActionMenu
           onEdit={() => onEdit(product.id)}
           onDelete={() => onDelete(product.id)}

@@ -153,7 +153,12 @@ const Home: React.FC = () => {
     setShowEditProduct(false);
     setShowCreateProduct(false);
     setEditingProduct(null);
-    updateURLParams(currentPage, itemsPerPage);
+    const newParams: any = {};
+    if (currentPage > 1) newParams.page = currentPage.toString();
+    if (itemsPerPage !== 10) newParams.items = itemsPerPage.toString();
+
+    setSearchParams(newParams);
+    // updateURLParams(currentPage, itemsPerPage);
   };
 
   const handlePageChangeWithURL = (page: number) => {
