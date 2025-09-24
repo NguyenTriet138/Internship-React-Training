@@ -182,7 +182,7 @@ const ProductModal: React.FC<{
             {/* Row: Status + Type */}
             <div className="form-row">
               <fieldset className="form-group">
-                <label htmlFor="productStatus">Status</label>
+                <label className="text text-title-lg" htmlFor="productStatus">Status</label>
                 <Field as="select" id="productStatus" name="productStatus" className="form-select">
                   <option value="Available">Available</option>
                   <option value="Sold out">Sold out</option>
@@ -190,7 +190,7 @@ const ProductModal: React.FC<{
               </fieldset>
 
               <fieldset className="form-group">
-                <label htmlFor="productType">Types</label>
+                <label className="text text-title-lg" htmlFor="productType">Types</label>
                 <Field as="select" id="productType" name="productType" className="form-select">
                   <option value="Bravo">Bravo</option>
                   <option value="Alfa">Alfa</option>
@@ -202,7 +202,7 @@ const ProductModal: React.FC<{
             {/* Row: Brand + Brand Image */}
             <div className="form-row">
               <fieldset className="form-group">
-                <label htmlFor="brandName">Brand</label>
+                <label className="text text-title-lg" htmlFor="brandName">Brand</label>
                 <Field
                   type="text"
                   id="brandName"
@@ -214,7 +214,7 @@ const ProductModal: React.FC<{
               </fieldset>
 
               <fieldset className="form-group">
-                <label>Brand Image</label>
+                <label className="text text-title-lg">Brand Image</label>
                 <div className="upload-section">
                   <img src={values.brandImage} alt="Brand" className="brand-avatar-detail" />
                   <input
