@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Product } from 'types/product.types';
+import { Product, ProductFilter, ProductStatus, ProductType } from 'types/product.types';
 import { useProducts } from '@hooks/useProducts';
 import ProductTable from './_ProductTable';
 import Pagination from './_Pagination';
@@ -10,7 +10,7 @@ import Modal from '@components/Modals/index';
 import ErrorMessage from '@share/Components/ErrorMessage';
 import '@assets/styles/main.css';
 import ProductForm from './_ProductForm';
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 const Home: React.FC = () => {
   const {
@@ -21,13 +21,14 @@ const Home: React.FC = () => {
     itemsPerPage,
     totalItems,
     totalPages,
+    currentFilters,
     handleFilter,
     handlePageChange,
     handleItemsPerPageChange,
     getProductById,
     refreshProducts,
     deleteProduct,
-    initializePagination,
+    initializeWithFilters,
   } = useProducts();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -51,14 +52,21 @@ const Home: React.FC = () => {
   }, [searchParams]);
 
   useEffect(() => {
-  const pageParam = searchParams.get("page");
-  const itemsParam = searchParams.get("items");
+    const pageParam = searchParams.get('page');
+    const itemsParam = searchParams.get('items');
 
-  const pageFromUrl = pageParam ? Number(pageParam) : 1;
-  const itemsFromUrl = itemsParam ? Number(itemsParam) : 10;
+    const pageFromUrl = pageParam ? Number(pageParam) : 1;
+    const itemsFromUrl = itemsParam ? Number(itemsParam) : 10;
 
-  initializePagination(pageFromUrl, itemsFromUrl);
-}, []);
+    const filtersFromUrl: ProductFilter = {
+      name: searchParams.get('search') || undefined,
+      brand: searchParams.get('brand') || undefined,
+      status: (searchParams.get('status') as ProductStatus | 'All') || undefined,
+      type: (searchParams.get('type') as ProductType | 'All') || undefined,
+    };
+
+    initializeWithFilters(filtersFromUrl, pageFromUrl, itemsFromUrl);
+  }, []);
 
   const handleEditProductFromURL = async (id: string) => {
     try {
@@ -89,7 +97,7 @@ const Home: React.FC = () => {
       setSearchParams({
         todo: 'edit',
         id: id,
-        name: encodeURIComponent(product.name)
+        name: encodeURIComponent(product.name),
       });
       setEditingProduct(product);
       setShowEditProduct(true);
@@ -99,12 +107,12 @@ const Home: React.FC = () => {
   };
 
   const handleDeleteProduct = (id: string) => {
-    const product = products.find(p => p.id === id);
+    const product = products.find((p) => p.id === id);
     if (product) {
       setSearchParams({
         todo: 'delete',
         id: id,
-        name: encodeURIComponent(product.name)
+        name: encodeURIComponent(product.name),
       });
     }
     setProductToDelete(id);
@@ -126,12 +134,12 @@ const Home: React.FC = () => {
         // Clear URL parameters after successful deletion
         setSearchParams({});
         await refreshProducts();
-        toast.success("Product deleted successfully!", {
-          position: "top-center"
+        toast.success('Product deleted successfully!', {
+          position: 'top-center',
         });
       } catch (error) {
-        toast.error("Failed to delete product!", {
-          position: "top-center"
+        toast.error('Failed to delete product!', {
+          position: 'top-center',
         });
       }
     }
@@ -146,7 +154,11 @@ const Home: React.FC = () => {
       currentParams.set('items', itemsPerPage.toString());
     }
     const returnUrl = `/home${currentParams.toString() ? '?' + currentParams.toString() : ''}`;
-    navigate(`/productdetail/${product.id}?name=${encodeURIComponent(product.name)}&returnUrl=${encodeURIComponent(returnUrl)}`);
+    navigate(
+      `/productdetail/${product.id}?name=${encodeURIComponent(
+        product.name,
+      )}&returnUrl=${encodeURIComponent(returnUrl)}`,
+    );
   };
 
   const closeModals = () => {
@@ -170,6 +182,30 @@ const Home: React.FC = () => {
     handleItemsPerPageChange(items);
   };
 
+  const handleFilterWithURL = (filters: ProductFilter) => {
+    const newParams: any = {};
+
+    const existingPage = searchParams.get('page');
+    const existingItems = searchParams.get('items');
+    const existingTodo = searchParams.get('todo');
+    const existingId = searchParams.get('id');
+    const existingName = searchParams.get('name');
+
+    if (existingPage) newParams.page = existingPage;
+    if (existingItems) newParams.items = existingItems;
+    if (existingTodo) newParams.todo = existingTodo;
+    if (existingId) newParams.id = existingId;
+    if (existingName) newParams.name = existingName;
+
+    if (filters.name) newParams.search = filters.name;
+    if (filters.brand) newParams.brand = filters.brand;
+    if (filters.status) newParams.status = filters.status;
+    if (filters.type) newParams.type = filters.type;
+
+    setSearchParams(newParams);
+    handleFilter(filters);
+  };
+
   // Helper function to update URL parameters
   const updateURLParams = (page: number, items: number) => {
     const newSearchParams: any = {};
@@ -181,13 +217,13 @@ const Home: React.FC = () => {
     if (existingTodo) newSearchParams.todo = existingTodo;
     if (existingId) newSearchParams.id = existingId;
     if (existingName) newSearchParams.name = existingName;
+    if (currentFilters.name) newSearchParams.search = currentFilters.name;
+    if (currentFilters.brand) newSearchParams.brand = currentFilters.brand;
+    if (currentFilters.status) newSearchParams.status = currentFilters.status;
+    if (currentFilters.type) newSearchParams.type = currentFilters.type;
 
-    if (page > 1) {
-      newSearchParams.page = page.toString();
-    }
-    if (items !== 10) {
-      newSearchParams.items = items.toString();
-    }
+    if (page > 1) newSearchParams.page = page.toString();
+    if (items !== 10) newSearchParams.items = items.toString();
     setSearchParams(newSearchParams);
   };
 
@@ -210,10 +246,16 @@ const Home: React.FC = () => {
       <ProductTable
         products={products}
         loading={loading}
-        onFilter={handleFilter}
+        onFilter={handleFilterWithURL}
         onEdit={handleEditProduct}
         onDelete={handleDeleteProduct}
         onRowClick={handleRowClick}
+        initialFilters={{
+          name: searchParams.get('search') || undefined,
+          brand: searchParams.get('brand') || undefined,
+          status: (searchParams.get('status') as ProductStatus | 'All') || undefined,
+          type: (searchParams.get('type') as ProductType | 'All') || undefined,
+        }}
       />
 
       {!loading && products.length > 0 && (
@@ -243,12 +285,16 @@ const Home: React.FC = () => {
             </>
           }
         >
-          <Heading as="h2" size="md" value="Delete product" className="modal-title"/>
+          <Heading as="h2" size="md" value="Delete product" className="modal-title" />
           <p className="text text-info text-description">
             Are you sure you want to delete this product? This action cannot be undone.
           </p>
           <div className="modal-actions">
-            <Button type="button" className="secondary-btn cancel-modal-confirm" onClick={cancelDelete}>
+            <Button
+              type="button"
+              className="secondary-btn cancel-modal-confirm"
+              onClick={cancelDelete}
+            >
               Cancel
             </Button>
             <Button className="delete-product" id="deleteProduct" onClick={confirmDelete}>

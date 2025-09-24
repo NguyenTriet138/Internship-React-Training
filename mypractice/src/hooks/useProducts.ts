@@ -66,11 +66,12 @@ export const useProducts = () => {
     }
   }, []);
 
-  const initializePagination = useCallback(async (page: number, items: number) => {
+  const initializeWithFilters = useCallback(async (filters: ProductFilter, page: number, items: number) => {
+    setCurrentFilters(filters);
     setCurrentPage(page);
     setItemsPerPage(items);
-    await loadProducts(currentFilters, page, items);
-  }, [currentFilters, loadProducts]);
+    await loadProducts(filters, page, items);
+  }, [loadProducts]);
 
   const handleFilter = useCallback(async (filters: ProductFilter) => {
     setCurrentFilters(filters);
@@ -124,6 +125,6 @@ export const useProducts = () => {
     getProductById,
     checkProductExists,
     refreshProducts: () => loadProducts(currentFilters, currentPage, itemsPerPage),
-    initializePagination,
+    initializeWithFilters,
   };
 };

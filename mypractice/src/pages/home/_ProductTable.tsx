@@ -13,6 +13,7 @@ interface ProductTableProps {
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
   onRowClick: (product: Product) => void;
+  initialFilters?: ProductFilter;
 }
 
 const ProductTable: React.FC<ProductTableProps> = ({
@@ -22,8 +23,9 @@ const ProductTable: React.FC<ProductTableProps> = ({
   onEdit,
   onDelete,
   onRowClick,
+  initialFilters = {},
 }) => {
-  const [filters, setFilters] = useState<ProductFilter>({});
+  const [filters, setFilters] = useState<ProductFilter>(initialFilters);
   const [filterTimeout, setFilterTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const handleFilterChange = useCallback(
