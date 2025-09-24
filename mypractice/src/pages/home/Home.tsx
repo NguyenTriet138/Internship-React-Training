@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Product, ProductFilter, ProductStatus, ProductType } from 'types/product.types';
+import { Product } from 'types/product.types';
 import { useProducts } from '@hooks/useProducts';
 import ProductTable from './_ProductTable';
 import Pagination from './_Pagination';
@@ -158,7 +158,6 @@ const Home: React.FC = () => {
     if (itemsPerPage !== 10) newParams.items = itemsPerPage.toString();
 
     setSearchParams(newParams);
-    // updateURLParams(currentPage, itemsPerPage);
   };
 
   const handlePageChangeWithURL = (page: number) => {
@@ -167,7 +166,7 @@ const Home: React.FC = () => {
   };
 
   const handleItemsPerPageChangeWithURL = (items: number) => {
-    updateURLParams(1, items); // Reset to page 1 when changing items per page
+    updateURLParams(1, items);
     handleItemsPerPageChange(items);
   };
 
@@ -175,7 +174,6 @@ const Home: React.FC = () => {
   const updateURLParams = (page: number, items: number) => {
     const newSearchParams: any = {};
 
-    // Preserve existing non-filter parameters (like todo, id, name for edit/delete)
     const existingTodo = searchParams.get('todo');
     const existingId = searchParams.get('id');
     const existingName = searchParams.get('name');
@@ -184,14 +182,12 @@ const Home: React.FC = () => {
     if (existingId) newSearchParams.id = existingId;
     if (existingName) newSearchParams.name = existingName;
 
-    // Add pagination parameters
     if (page > 1) {
       newSearchParams.page = page.toString();
     }
-    if (items !== 10) { // Only add if different from default
+    if (items !== 10) {
       newSearchParams.items = items.toString();
     }
-    // Update URL with new parameters
     setSearchParams(newSearchParams);
   };
 

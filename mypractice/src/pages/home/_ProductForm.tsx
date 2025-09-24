@@ -225,7 +225,7 @@ const ProductModal: React.FC<{
                       setFieldValue('brandImage', URL.createObjectURL(file));
 
                       const form = new FormData();
-                      form.append('file', file); // backend reads "file"
+                      form.append('file', file);
                     }}
                     className="upload-area"
                     style={{ display: 'none' }}

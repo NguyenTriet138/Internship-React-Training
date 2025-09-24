@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Product, ProductFilter, SaveProductDataRequest } from 'types/product.types';
 import { PaginatedResult } from 'types/pagination.types';
 import { ProductService } from '@models/productModel';
@@ -105,10 +105,6 @@ export const useProducts = () => {
       return false;
     }
   }, []);
-
-  // useEffect(() => {
-  //   loadProducts();
-  // }, []);
 
   return {
     products,
