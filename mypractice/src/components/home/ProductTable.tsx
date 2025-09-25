@@ -39,7 +39,17 @@ const ProductTable: React.FC<ProductTableProps> = ({
       if (filterTimeout) clearTimeout(filterTimeout);
 
       const timeout = setTimeout(() => {
-        onFilter(newFilters);
+        const trimmedFilters: ProductFilter = {};
+        Object.entries(newFilters).forEach(([key, val]) => {
+          if (typeof val === 'string') {
+            const trimmed = val.trim();
+            if (trimmed !== '') trimmedFilters[key as keyof ProductFilter] = trimmed as any;
+          } else if (val !== undefined) {
+            trimmedFilters[key as keyof ProductFilter] = val;
+          }
+        });
+
+        onFilter(trimmedFilters);
       }, 300);
 
       setFilterTimeout(timeout);
