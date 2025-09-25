@@ -41,6 +41,7 @@
   color: red;
   margin-bottom: 10px;
   font-size: 0.9rem;
+  margin-top: -10px;
 }
 
 .form-message.success {

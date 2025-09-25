@@ -7,16 +7,32 @@ import Heading from 'share/components/heading/index';
 import TextInput from 'share/components/textfield/index';
 import FormMessage from '@components/message/index';
 import Button from 'share/components/button/index';
+import * as yup from 'yup';
+
+const emailSchema = yup.string().email("Invalid email format").required("Email is required");
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({ username: '', password: '' });
   const navigate = useNavigate();
+  const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
 
   const { isLoading, message, messageType, login } = useAuth();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleBlur = async (e: React.FocusEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    if (id === "username") {
+      try {
+        await emailSchema.validate(value);
+        setErrors(prev => ({ ...prev, username: undefined }));
+      } catch (err: any) {
+        setErrors(prev => ({ ...prev, username: err.message }));
+      }
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,7 +49,8 @@ const Login: React.FC = () => {
         <Heading as="h2" size="md" className="login-title" value="Login" />
 
         <form id="login-form" onSubmit={handleSubmit}>
-          <TextInput id="username" value={formData.username} onChange={handleInputChange} placeholder="Email" />
+          <TextInput id="username" value={formData.username} onChange={handleInputChange} onBlur={handleBlur} placeholder="Email" />
+          <FormMessage message={errors.username || ''} type="error" />
           <TextInput id="password" type="password" value={formData.password} onChange={handleInputChange} placeholder="Password" />
 
           <FormMessage message={message} type={messageType} />
