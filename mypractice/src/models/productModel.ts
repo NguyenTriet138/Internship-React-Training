@@ -1,6 +1,7 @@
 import { ProductData, Product, ProductFilter, SaveProductDataRequest } from 'types/product.types';
 import { PaginatedResult } from 'types/pagination.types';
-import { API_CONFIG } from '@config/env';
+import { API_CONFIG, ENV } from '@config/env';
+import { ImgBBResponse } from 'types/imageResponse.type';
 
 export class ProductService {
   private readonly baseUrl: string;
@@ -17,6 +18,23 @@ export class ProductService {
         ...options?.headers,
       },
       ...options,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+  }
+
+  private async requestImg(endpoint: string, body?: BodyInit): Promise<ImgBBResponse> {
+    console.log('IMGBB API Key:', ENV.IMGBB_API_KEY);
+    console.log('apikeyuuuu:', process.env.REACT_APP_IMGBB_API_KEY);
+    const uploadUrl = `${ENV.IMGBB_BASE_URL}?expiration=${ENV.IMGBB_EXPIRATION}&key=${ENV.IMGBB_API_KEY}`;
+    const response = await fetch(uploadUrl, {
+      method: 'POST',
+      headers: {},
+      body,
     });
 
     if (!response.ok) {
@@ -108,5 +126,12 @@ export class ProductService {
       product.name.toLowerCase() === name.toLowerCase() &&
       product.id !== excludeId
     );
+  }
+
+  async uploadImage(base64Img: string): Promise<string> {
+    const form = new FormData();
+    form.append('image', base64Img.split(',')[1]);
+    const response = await this.requestImg(ENV.IMGBB_BASE_URL, form);
+    return response.data.url;
   }
 }

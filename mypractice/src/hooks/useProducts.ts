@@ -17,6 +17,10 @@ export const useProducts = () => {
 
   const createProduct = useCallback(async (data: SaveProductDataRequest): Promise<Product> => {
     try {
+      const brandImage = await productService.uploadImage(data.brandImage);
+      const productImage = await productService.uploadImage(data.productImage);
+      data.productImage = productImage;
+      data.brandImage = brandImage;
       const newProduct = await productService.createProduct(data);
       return newProduct;
     } catch (err) {
@@ -26,6 +30,16 @@ export const useProducts = () => {
 
   const updateProduct = useCallback(async (id: string, data: SaveProductDataRequest): Promise<Product> => {
     try {
+      if (!data.productImage.startsWith('http')) {
+        const productImage = await productService.uploadImage(data.productImage);
+        data.productImage = productImage;
+      }
+
+      if (!data.brandImage.startsWith('http')) {
+        const brandImage = await productService.uploadImage(data.brandImage);
+        data.brandImage = brandImage;
+      }
+
       const updatedProduct = await productService.updateProduct(id, data);
       return updatedProduct;
     } catch (err) {

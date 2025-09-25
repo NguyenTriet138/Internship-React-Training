@@ -107,11 +107,14 @@ const ProductModal: React.FC<{
                 type="file"
                 onChange={(e) => {
                   const file = e.target.files?.[0];
-                  if (!file) return;
-                  setFieldValue('productImage', URL.createObjectURL(file));
-
-                  const form = new FormData();
-                  form.append('file', file); // backend reads "file"
+                    if (!file) return;
+                    
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                      const base64String = reader.result as string;
+                      setFieldValue('productImage', base64String);
+                    };
+                    reader.readAsDataURL(file);
                 }}
                 className="upload-area"
                 style={{ display: 'none' }}
@@ -225,10 +228,15 @@ const ProductModal: React.FC<{
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (!file) return;
-                      setFieldValue('brandImage', URL.createObjectURL(file));
-
-                      const form = new FormData();
-                      form.append('file', file);
+                      
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        const base64String = reader.result as string;
+                        setFieldValue('brandImage', base64String);
+                      };
+                      reader.readAsDataURL(file);
+                      // const form = new FormData();
+                      // form.append('file', file);
                     }}
                     className="upload-area"
                     style={{ display: 'none' }}
