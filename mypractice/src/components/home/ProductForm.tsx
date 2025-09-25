@@ -235,8 +235,6 @@ const ProductModal: React.FC<{
                         setFieldValue('brandImage', base64String);
                       };
                       reader.readAsDataURL(file);
-                      // const form = new FormData();
-                      // form.append('file', file);
                     }}
                     className="upload-area"
                     style={{ display: 'none' }}

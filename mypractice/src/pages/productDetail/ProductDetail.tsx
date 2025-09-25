@@ -275,7 +275,17 @@ const ProductDetail: React.FC = () => {
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={(e) => handleBrandImageUpload(e, setFieldValue)}
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                          const base64String = reader.result as string;
+                          setFieldValue('brandImage', base64String);
+                        };
+                        reader.readAsDataURL(file);
+                      }}
                       style={{ display: 'none' }}
                       ref={brandImageInputRef}
                     />
@@ -312,7 +322,17 @@ const ProductDetail: React.FC = () => {
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => handleProductImageUpload(e, setFieldValue)}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  
+                  const reader = new FileReader();
+                  reader.onloadend = () => {
+                    const base64String = reader.result as string;
+                    setFieldValue('brandImage', base64String);
+                  };
+                  reader.readAsDataURL(file);
+                }}
                 style={{ display: 'none' }}
                 ref={productImageInputRef}
               />
