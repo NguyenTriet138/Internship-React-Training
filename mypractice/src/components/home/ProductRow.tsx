@@ -1,8 +1,8 @@
 import React from 'react';
 import { Product } from 'types/product.types';
-import ImageInfo from '@components/imageInfo/index';
-import StatusBadge from '@components/statusBadge/index';
-import ActionMenu from 'share/components/actionMenu/index';
+import ImageInfo from '@components/ImageInfo/index';
+import StatusBadge from '@components/StatusBadge/index';
+import ActionMenu from 'Share/Components/ActionMenu/index';
 
 interface ProductRowProps {
   product: Product;

@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { Product, ProductFilter, ProductStatus, ProductType } from 'types/product.types';
 import ProductRow from '@components/home/ProductRow';
-import FilterInput from '@components/filterInput';
-import FilterSelect from '@components/filterSelect';
-import TableEmptyState from '@components/tableEmptyState';
+import FilterInput from '@components/FilterInput';
+import FilterSelect from '@components/FilterSelect';
+import TableEmptyState from '@components/TableEmptyState';
 
 interface ProductTableProps {
   products: Product[];
