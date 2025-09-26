@@ -28,8 +28,6 @@ export class ProductService {
   }
 
   private async requestImg(endpoint: string, body?: BodyInit): Promise<ImgBBResponse> {
-    console.log('IMGBB API Key:', ENV.IMGBB_API_KEY);
-    console.log('apikeyuuuu:', process.env.REACT_APP_IMGBB_API_KEY);
     const uploadUrl = `${ENV.IMGBB_BASE_URL}?expiration=${ENV.IMGBB_EXPIRATION}&key=${ENV.IMGBB_API_KEY}`;
     const response = await fetch(uploadUrl, {
       method: 'POST',

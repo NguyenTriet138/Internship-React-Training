@@ -133,35 +133,6 @@ const ProductDetail: React.FC = () => {
     }
   };
 
-  const handleProductImageUpload = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setFieldValue: (field: string, value: any) => void,
-  ) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setFieldValue('productImage', imageUrl);
-    const formData = new FormData();
-
-    formData.append('file', file);
-  };
-
-  // Handle brand image upload
-  const handleBrandImageUpload = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setFieldValue: (field: string, value: any) => void,
-  ) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setFieldValue('brandImage', imageUrl);
-
-    const formData = new FormData();
-    formData.append('file', file);
-  };
-
   if (loading) {
     return (
       <div className="container-detail-page">

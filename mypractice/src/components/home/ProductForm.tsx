@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useProducts } from '@hooks/useProducts';
-import { ProductStatus, ProductType } from 'types/product.types';
+import { ProductStatus, ProductType, Product } from 'types/product.types';
 import '@assets/styles/main.css';
 import Modal from '@components/modals/index';
 import { toast } from "react-toastify";
@@ -24,7 +24,7 @@ const ProductModal: React.FC<{
   productId?: string;
   initialValues?: Partial<ProductFormValues>;
   onClose: () => void;
-  onSave: (values: ProductFormValues) => void;
+  onSave: (savedProduct: Product) => void;
 }> = ({ mode = 'add', productId, initialValues, onClose, onSave }) => {
   const defaultValues: ProductFormValues = {
     productName: '',
@@ -85,20 +85,17 @@ const ProductModal: React.FC<{
               brandImage: values.brandImage,
             };
 
+            let savedProduct;
             if (mode === 'edit' && productId) {
-              await updateProduct(productId, productData);
-              toast.success("Product updated successfully!", {
-                position: "top-center"
-              });
+              savedProduct = await updateProduct(productId, productData);
+              toast.success("Product updated successfully!", { position: "top-center" });
             } else {
-              await createProduct(productData);
-              toast.success("Product created successfully!", {
-                position: "top-center"
-              });
+              savedProduct = await createProduct(productData);
+              toast.success("Product created successfully!", { position: "top-center" });
             }
 
             onClose();
-            onSave(values);
+            onSave(savedProduct);
           } catch (error) {
             toast.error(mode === 'edit' ? "Update product failed!" : "Create product failed!", {
               position: "top-center"

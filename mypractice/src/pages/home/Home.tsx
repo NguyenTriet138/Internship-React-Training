@@ -29,6 +29,9 @@ const Home: React.FC = () => {
     refreshProducts,
     deleteProduct,
     initializeWithFilters,
+    updateLocalProduct,
+    removeLocalProduct,
+    addLocalProduct,
   } = useProducts();
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -85,9 +88,15 @@ const Home: React.FC = () => {
     if (productToDelete) {
       try {
         await deleteProduct(productToDelete);
+        const newLength = products.length - 1;
+        removeLocalProduct(productToDelete);
         setShowDeleteConfirm(false);
         setProductToDelete(null);
-        await refreshProducts();
+
+        if (newLength <= 0 && currentPage > 1) {
+          await handlePageChange(currentPage - 1);
+        }
+
         toast.success('Product deleted successfully!', { position: 'top-center' });
       } catch (error) {
         toast.error('Failed to delete product!', { position: 'top-center' });
@@ -266,9 +275,9 @@ const Home: React.FC = () => {
             brandImage: editingProduct.brandImage,
           }}
           onClose={closeModals}
-          onSave={async (values) => {
+          onSave={(savedProduct) => {
             closeModals();
-            await refreshProducts();
+            updateLocalProduct(savedProduct);
           }}
         />
       )}

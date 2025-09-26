@@ -121,6 +121,38 @@ export const useProducts = () => {
     }
   }, []);
 
+  const updateLocalProduct = useCallback((product: Product) => {
+    setProducts(prev => prev.map(p => (p.id === product.id ? product : p)));
+  }, []);
+
+  const removeLocalProduct = useCallback((id: string) => {
+    setProducts(prev => prev.filter(p => p.id !== id));
+    setTotalItems(prevTotal => {
+      const newTotal = Math.max(0, prevTotal - 1);
+      setTotalPages(Math.ceil(newTotal / itemsPerPage));
+      return newTotal;
+    });
+  }, [itemsPerPage]);
+
+  const addLocalProduct = useCallback((product: Product) => {
+    setTotalItems(prevTotal => {
+      const newTotal = prevTotal + 1;
+      setTotalPages(Math.ceil(newTotal / itemsPerPage));
+      return newTotal;
+    });
+
+    setProducts(prev => {
+      if (currentPage === 1) {
+        const newList = [product, ...prev];
+        if (newList.length > itemsPerPage) {
+          return newList.slice(0, itemsPerPage);
+        }
+        return newList;
+      }
+      return prev;
+    });
+  }, [currentPage, itemsPerPage]);
+
   return {
     products,
     loading,
@@ -140,5 +172,8 @@ export const useProducts = () => {
     checkProductExists,
     refreshProducts: () => loadProducts(currentFilters, currentPage, itemsPerPage),
     initializeWithFilters,
+    updateLocalProduct,
+    removeLocalProduct,
+    addLocalProduct,
   };
 };
