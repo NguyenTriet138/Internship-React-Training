@@ -1,10 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { Product, ProductFilter, ProductStatus, ProductType } from 'types/product.types';
-import ProductRow from './_ProductRow';
-import FilterInput from '@components/FilterInput';
-import FilterSelect from '@components/FilterSelect';
-import TableEmptyState from '@components/TableEmptyState';
-import TableLoading from '@components/TableLoading';
+import ProductRow from '@components/home/ProductRow';
+import FilterInput from '@components/filterInput';
+import FilterSelect from '@components/filterSelect';
+import TableEmptyState from '@components/tableEmptyState';
 
 interface ProductTableProps {
   products: Product[];
@@ -39,12 +38,22 @@ const ProductTable: React.FC<ProductTableProps> = ({
       if (filterTimeout) clearTimeout(filterTimeout);
 
       const timeout = setTimeout(() => {
-        onFilter(newFilters);
+        const trimmedFilters: ProductFilter = {};
+        Object.entries(newFilters).forEach(([key, val]) => {
+          if (typeof val === 'string') {
+            const trimmed = val.trim();
+            if (trimmed !== '') trimmedFilters[key as keyof ProductFilter] = trimmed as any;
+          } else if (val !== undefined) {
+            trimmedFilters[key as keyof ProductFilter] = val;
+          }
+        });
+
+        onFilter(trimmedFilters);
       }, 300);
 
       setFilterTimeout(timeout);
     },
-    [filters, filterTimeout, onFilter]
+    [filters, filterTimeout, onFilter],
   );
 
   const handleSelectChange = useCallback(
@@ -56,7 +65,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
       setFilters(newFilters);
       onFilter(newFilters);
     },
-    [filters, onFilter]
+    [filters, onFilter],
   );
 
   return (
@@ -128,9 +137,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
         </thead>
 
         <tbody className="product-display">
-          {loading ? (
-            <TableLoading colSpan={7} />
-          ) : products.length === 0 ? (
+          {products.length === 0 ? (
             <TableEmptyState colSpan={7} message="No products found" />
           ) : (
             products.map((product) => (
@@ -144,6 +151,12 @@ const ProductTable: React.FC<ProductTableProps> = ({
             ))
           )}
         </tbody>
+
+        {loading && (
+          <div className="table-overlay">
+            <div className="spinner">Loading products...</div>
+          </div>
+        )}
       </table>
     </div>
   );

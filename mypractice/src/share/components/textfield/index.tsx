@@ -5,6 +5,7 @@ type TextInputProps = {
   type?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   placeholder?: string;
   required?: boolean;
   className?: string;
@@ -15,6 +16,7 @@ const TextInput: React.FC<TextInputProps> = ({
   type = 'text',
   value,
   onChange,
+  onBlur,
   placeholder,
   required = true,
   className = '',
@@ -26,6 +28,7 @@ const TextInput: React.FC<TextInputProps> = ({
         type={type}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         required={required}
         placeholder={placeholder}
         aria-label={placeholder || id}

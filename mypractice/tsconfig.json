@@ -26,11 +26,11 @@
       "@hooks/*": ["hooks/*"],
       "@models/*": ["models/*"],
       "@pages/*": ["pages/*"],
-      "@share/*": ["Share/*"],
+      "@share/*": ["share/*"],
       "@types/*": ["types/*"],
       "@utils/*": ["utils/*"],
       "@config/*": ["config/*"],
-      "@pagination/*": ["components/Pagination/*"],
+      "@pagination/*": ["components/pagination/*"],
       "@assets/*": ["assets/*"]
     }
   },

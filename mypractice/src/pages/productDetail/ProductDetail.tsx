@@ -4,10 +4,10 @@ import * as Yup from 'yup';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Product, ProductStatus, ProductType } from 'types/product.types';
 import { useProducts } from '@hooks/useProducts';
-import Heading from '@share/Components/Heading';
-import ErrorMessage from '@share/Components/ErrorMessage';
+import Heading from '@share/components/heading';
+import ErrorMessage from '@share/components/errorMessage';
 import { toast } from 'react-toastify';
-import Button from '@share/Components/Button';
+import Button from '@share/components/button';
 import '@assets/styles/pages/product-style.css';
 
 interface ProductFormValues {
@@ -44,17 +44,24 @@ const ProductDetail: React.FC = () => {
     brandImage: '',
   });
 
-  // Validation schema
   const validationSchema = Yup.object({
-    name: Yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+    name: Yup.string()
+      .required('Name is required')
+      .min(2, 'Name must be at least 2 characters')
+      .max(50, 'Name must be at most 50 characters'),
     quantity: Yup.number()
       .required('Quantity is required')
       .min(0, 'Quantity must be 0 or greater')
       .integer('Quantity must be an integer'),
-    price: Yup.number().required('Price is required').min(0, 'Price must be 0 or greater'),
+    price: Yup.number()
+      .required('Price is required')
+      .min(0, 'Price must be 0 or greater'),
     status: Yup.string().required('Status is required'),
     type: Yup.string().required('Type is required'),
-    brand: Yup.string().required('Brand is required').min(2, 'Brand must be at least 2 characters'),
+    brand: Yup.string()
+      .required('Brand is required')
+      .min(2, 'Brand must be at least 2 characters')
+      .max(50, 'Brand must be at most 50 characters'),
   });
 
   useEffect(() => {
@@ -126,35 +133,6 @@ const ProductDetail: React.FC = () => {
     }
   };
 
-  const handleProductImageUpload = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setFieldValue: (field: string, value: any) => void,
-  ) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setFieldValue('productImage', imageUrl);
-    const formData = new FormData();
-
-    formData.append('file', file);
-  };
-
-  // Handle brand image upload
-  const handleBrandImageUpload = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setFieldValue: (field: string, value: any) => void,
-  ) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const imageUrl = URL.createObjectURL(file);
-    setFieldValue('brandImage', imageUrl);
-
-    const formData = new FormData();
-    formData.append('file', file);
-  };
-
   if (loading) {
     return (
       <div className="container-detail-page">
@@ -195,7 +173,7 @@ const ProductDetail: React.FC = () => {
                 <label className="text text-title-lg" htmlFor="productName">
                   Name
                 </label>
-                <Field type="text" id="productName" name="name" className="form-input" />
+                <Field type="text" id="productName" name="name" className="form-input" placeholder="Enter name..." maxLength={55} />
                 <FormikError name="name" component="div" className="error-message" />
               </fieldset>
 
@@ -257,6 +235,8 @@ const ProductDetail: React.FC = () => {
                       id="brandName"
                       name="brand"
                       className="form-input"
+                      placeholder="Enter brand..." 
+                      maxLength={55}
                       style={{ flex: 1 }}
                     />
                   </div>
@@ -275,7 +255,17 @@ const ProductDetail: React.FC = () => {
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={(e) => handleBrandImageUpload(e, setFieldValue)}
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        
+                        const reader = new FileReader();
+                        reader.onloadend = () => {
+                          const base64String = reader.result as string;
+                          setFieldValue('brandImage', base64String);
+                        };
+                        reader.readAsDataURL(file);
+                      }}
                       style={{ display: 'none' }}
                       ref={brandImageInputRef}
                     />
@@ -312,7 +302,17 @@ const ProductDetail: React.FC = () => {
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => handleProductImageUpload(e, setFieldValue)}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (!file) return;
+                  
+                  const reader = new FileReader();
+                  reader.onloadend = () => {
+                    const base64String = reader.result as string;
+                    setFieldValue('productImage', base64String);
+                  };
+                  reader.readAsDataURL(file);
+                }}
                 style={{ display: 'none' }}
                 ref={productImageInputRef}
               />

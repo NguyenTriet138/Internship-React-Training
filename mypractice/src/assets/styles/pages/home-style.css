@@ -42,6 +42,31 @@
   padding-top: 30px;
 }
 
+.product-table-container {
+  position: relative;
+}
+
+.table-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+.spinner {
+  padding: 10px 20px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  font-weight: 500;
+}
+
 .title-group {
   display: flex;
   flex-direction: column;
@@ -66,8 +91,7 @@
 
 .product-filter:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  cursor: pointer;
 }
 
 .product-table tbody tr {
@@ -297,6 +321,8 @@
   width: 65px;
   height: 65px;
   border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .input-form {
@@ -407,6 +433,7 @@
   border-radius: 6px;
   background-color: var(--clr-bg);
   font-size: var(--fs-lg);
+  cursor: pointer;
 }
 
 .pagination-buttons {

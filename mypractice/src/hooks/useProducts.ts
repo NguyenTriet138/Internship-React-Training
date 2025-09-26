@@ -17,6 +17,10 @@ export const useProducts = () => {
 
   const createProduct = useCallback(async (data: SaveProductDataRequest): Promise<Product> => {
     try {
+      const brandImage = await productService.uploadImage(data.brandImage);
+      const productImage = await productService.uploadImage(data.productImage);
+      data.productImage = productImage;
+      data.brandImage = brandImage;
       const newProduct = await productService.createProduct(data);
       return newProduct;
     } catch (err) {
@@ -26,6 +30,16 @@ export const useProducts = () => {
 
   const updateProduct = useCallback(async (id: string, data: SaveProductDataRequest): Promise<Product> => {
     try {
+      if (!data.productImage.startsWith('http')) {
+        const productImage = await productService.uploadImage(data.productImage);
+        data.productImage = productImage;
+      }
+
+      if (!data.brandImage.startsWith('http')) {
+        const brandImage = await productService.uploadImage(data.brandImage);
+        data.brandImage = brandImage;
+      }
+
       const updatedProduct = await productService.updateProduct(id, data);
       return updatedProduct;
     } catch (err) {
@@ -107,6 +121,38 @@ export const useProducts = () => {
     }
   }, []);
 
+  const updateLocalProduct = useCallback((product: Product) => {
+    setProducts(prev => prev.map(p => (p.id === product.id ? product : p)));
+  }, []);
+
+  const removeLocalProduct = useCallback((id: string) => {
+    setProducts(prev => prev.filter(p => p.id !== id));
+    setTotalItems(prevTotal => {
+      const newTotal = Math.max(0, prevTotal - 1);
+      setTotalPages(Math.ceil(newTotal / itemsPerPage));
+      return newTotal;
+    });
+  }, [itemsPerPage]);
+
+  const addLocalProduct = useCallback((product: Product) => {
+    setTotalItems(prevTotal => {
+      const newTotal = prevTotal + 1;
+      setTotalPages(Math.ceil(newTotal / itemsPerPage));
+      return newTotal;
+    });
+
+    setProducts(prev => {
+      if (currentPage === 1) {
+        const newList = [product, ...prev];
+        if (newList.length > itemsPerPage) {
+          return newList.slice(0, itemsPerPage);
+        }
+        return newList;
+      }
+      return prev;
+    });
+  }, [currentPage, itemsPerPage]);
+
   return {
     products,
     loading,
@@ -126,5 +172,8 @@ export const useProducts = () => {
     checkProductExists,
     refreshProducts: () => loadProducts(currentFilters, currentPage, itemsPerPage),
     initializeWithFilters,
+    updateLocalProduct,
+    removeLocalProduct,
+    addLocalProduct,
   };
 };

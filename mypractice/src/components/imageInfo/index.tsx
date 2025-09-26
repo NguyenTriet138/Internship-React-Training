@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 type ImageInfoProps = {
   imageSrc: string;
   fallbackSrc: string;
   alt: string;
-  text: string;
+  text: ReactNode;
   variant?: 'product' | 'brand';
 };
 
