@@ -4,7 +4,7 @@ import Home from '@pages/home/Home';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import ProductDetail from '@pages/productDetail/ProductDetail';
-import ProtectedRoute from '@components/protectedRoute';
+import ProtectedRoute from '@components/protectedRoute/index';
 
 function App() {
   return (
