@@ -4,10 +4,10 @@ import { Product, ProductFilter, ProductStatus, ProductType } from 'types/produc
 import { useProducts } from '@hooks/useProducts';
 import ProductTable from '@components/home/ProductTable';
 import Pagination from '@components/home/Pagination';
-import Heading from 'Share_bk/Components_bk/Heading_bk';
-import Button from 'Share_bk/Components_bk/Button_bk';
-import Modal from '@components/Modals_bk';
-import ErrorMessage from 'Share_bk/Components_bk/ErrorMessage_bk';
+import Heading from '@share/components/heading';
+import Button from '@share/components/button';
+import Modal from '@components/modals';
+import ErrorMessage from '@share/components/errorMessage';
 import '@assets/styles/main.css';
 import ProductForm from '@components/home/ProductForm';
 import { toast } from 'react-toastify';

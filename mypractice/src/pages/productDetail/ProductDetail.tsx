@@ -4,10 +4,10 @@ import * as Yup from 'yup';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Product, ProductStatus, ProductType } from 'types/product.types';
 import { useProducts } from '@hooks/useProducts';
-import Heading from 'Share_bk/Components_bk/Heading_bk';
-import ErrorMessage from 'Share_bk/Components_bk/ErrorMessage_bk';
+import Heading from '@share/components/heading';
+import ErrorMessage from '@share/components/errorMessage';
 import { toast } from 'react-toastify';
-import Button from 'Share_bk/Components_bk/Button_bk';
+import Button from '@share/components/button';
 import '@assets/styles/pages/product-style.css';
 
 interface ProductFormValues {

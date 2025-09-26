@@ -1,5 +1,5 @@
 import React from 'react';
-import Heading from 'Share_bk/Components_bk/Heading_bk';
+import Heading from '@share/components/heading';
 
 type ModalProps = {
   title: string;
