@@ -211,6 +211,7 @@ const Home: React.FC = () => {
           itemsPerPage={itemsPerPage}
           onPageChange={handlePageChangeWithURL}
           onItemsPerPageChange={handleItemsPerPageChangeWithURL}
+          loading={loading}
         />
       )}
 

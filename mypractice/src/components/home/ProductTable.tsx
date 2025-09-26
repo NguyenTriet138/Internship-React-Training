@@ -53,7 +53,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
 
       setFilterTimeout(timeout);
     },
-    [filters, filterTimeout, onFilter]
+    [filters, filterTimeout, onFilter],
   );
 
   const handleSelectChange = useCallback(
@@ -65,7 +65,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
       setFilters(newFilters);
       onFilter(newFilters);
     },
-    [filters, onFilter]
+    [filters, onFilter],
   );
 
   return (
@@ -137,9 +137,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
         </thead>
 
         <tbody className="product-display">
-          {loading ? (
-            <TableEmptyState colSpan={7} message="Loading products..." />
-          ) : products.length === 0 ? (
+          {products.length === 0 ? (
             <TableEmptyState colSpan={7} message="No products found" />
           ) : (
             products.map((product) => (
@@ -153,6 +151,12 @@ const ProductTable: React.FC<ProductTableProps> = ({
             ))
           )}
         </tbody>
+
+        {loading && (
+          <div className="table-overlay">
+            <div className="spinner">Loading products...</div>
+          </div>
+        )}
       </table>
     </div>
   );
