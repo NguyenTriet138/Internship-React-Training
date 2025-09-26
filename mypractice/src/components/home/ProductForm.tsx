@@ -43,15 +43,23 @@ const ProductModal: React.FC<{
   const inputRefBrandImg = useRef<HTMLInputElement>(null);
 
   const validationSchema = Yup.object({
-    productName: Yup.string().required('Name is required').min(2, 'Name must be at least 2 characters'),
+    productName: Yup.string()
+      .required('Name is required')
+      .min(2, 'Name must be at least 2 characters')
+      .max(50, 'Name must be at most 50 characters'),
     productQuantity: Yup.number()
       .required('Quantity is required')
       .min(0, 'Quantity must be 0 or greater')
       .integer('Quantity must be an integer'),
-    productPrice: Yup.number().required('Price is required').min(0, 'Price must be 0 or greater'),
+    productPrice: Yup.number()
+      .required('Price is required')
+      .min(0, 'Price must be 0 or greater'),
     productStatus: Yup.string().required('Status is required'),
     productType: Yup.string().required('Type is required'),
-    brandName: Yup.string().required('Brand is required').min(2, 'Brand must be at least 2 characters'),
+    brandName: Yup.string()
+      .required('Brand is required')
+      .min(2, 'Brand must be at least 2 characters')
+      .max(50, 'Brand must be at most 50 characters'),
   });
 
   return (
@@ -150,6 +158,7 @@ const ProductModal: React.FC<{
                 name="productName"
                 className="form-input"
                 placeholder="Enter name..."
+                maxLength={55}
               />
               <ErrorMessage name="productName" component="div" className="error-message" />
             </fieldset>
@@ -215,6 +224,7 @@ const ProductModal: React.FC<{
                   name="brandName"
                   className="form-input"
                   placeholder="Enter Brand..."
+                  maxLength={55}
                 />
                 <ErrorMessage name="brandName" component="div" className="error-message" />
               </fieldset>

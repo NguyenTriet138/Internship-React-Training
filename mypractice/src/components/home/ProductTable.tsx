@@ -4,7 +4,6 @@ import ProductRow from '@components/home/ProductRow';
 import FilterInput from '@components/filterInput';
 import FilterSelect from '@components/filterSelect';
 import TableEmptyState from '@components/tableEmptyState';
-import TableLoading from '@components/tableLoading';
 
 interface ProductTableProps {
   products: Product[];
@@ -139,7 +138,7 @@ const ProductTable: React.FC<ProductTableProps> = ({
 
         <tbody className="product-display">
           {loading ? (
-            <TableLoading colSpan={7} />
+            <TableEmptyState colSpan={7} message="Loading products..." />
           ) : products.length === 0 ? (
             <TableEmptyState colSpan={7} message="No products found" />
           ) : (

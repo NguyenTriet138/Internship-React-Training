@@ -11,6 +11,11 @@ interface ProductRowProps {
   onRowClick: (product: Product) => void;
 }
 
+const truncateText = (text: string, maxLength: number = 30) => {
+  if (!text) return '';
+  return text.length > maxLength ? text.slice(0, maxLength) + '…' : text;
+};
+
 const ProductRow: React.FC<ProductRowProps> = ({
   product,
   onEdit,
@@ -24,7 +29,7 @@ const ProductRow: React.FC<ProductRowProps> = ({
           imageSrc={product.productImage}
           fallbackSrc="/placeholder-product.png"
           alt={product.name}
-          text={product.name}
+          text={<span title={product.name}>{truncateText(product.name, 30)}</span>}
           variant="product"
         />
       </td>
@@ -42,7 +47,7 @@ const ProductRow: React.FC<ProductRowProps> = ({
           imageSrc={product.brandImage}
           fallbackSrc="/placeholder-brand.png"
           alt={product.brand}
-          text={product.brand}
+          text={<span title={product.brand}>{truncateText(product.brand, 30)}</span>}
           variant="brand"
         />
       </td>
