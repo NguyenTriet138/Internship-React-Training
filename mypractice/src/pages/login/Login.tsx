@@ -3,10 +3,10 @@ import { useAuth } from '@hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import { LoginFormData } from 'types/user.types';
 import '@assets/styles/main.css';
-import Heading from 'Share/Components/Heading';
-import TextInput from 'Share/Components/Textfield';
-import FormMessage from '@components/Message';
-import Button from 'Share/Components/Button';
+import Heading from 'Share/Components_bk/Heading';
+import TextInput from 'Share/Components_bk/Textfield';
+import FormMessage from '@components/Message_bk';
+import Button from 'Share/Components_bk/Button';
 import * as yup from 'yup';
 
 const emailSchema = yup.string().email("Invalid email format").required("Email is required");
