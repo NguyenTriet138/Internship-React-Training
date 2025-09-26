@@ -12,7 +12,7 @@ module.exports = {
       "@types": path.resolve(__dirname, "src/types/"),
       "@assets": path.resolve(__dirname, "src/assets/"),
       "@config": path.resolve(__dirname, "src/config/"),
-      "@pagination": path.resolve(__dirname, "src/components/Pagination/"),
+      "@pagination": path.resolve(__dirname, "src/components/pagination/"),
     }
   },
 };
