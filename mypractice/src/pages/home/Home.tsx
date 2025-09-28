@@ -203,7 +203,7 @@ const Home: React.FC = () => {
         }}
       />
 
-      {!loading && products.length > 0 && (
+      {products.length > 0 && (
         <Pagination
           currentPage={currentPage}
           totalPages={totalPages}
