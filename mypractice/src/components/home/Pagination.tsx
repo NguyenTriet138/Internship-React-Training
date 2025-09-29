@@ -1,7 +1,7 @@
 import React from 'react';
-import PaginationInfo from '@pagination/PaginationInfo';
-import ItemsPerPageSelect from '@pagination/ItemsPerPage';
-import PaginationControls from '@pagination/PaginationControls';
+import PaginationInfo from '@components/pagination/PaginationInfo';
+import ItemsPerPageSelect from '@components/pagination/ItemsPerPage';
+import PaginationControls from '@components/pagination/PaginationControls';
 
 interface PaginationProps {
   currentPage: number;
@@ -10,6 +10,7 @@ interface PaginationProps {
   itemsPerPage: number;
   onPageChange: (page: number) => void;
   onItemsPerPageChange: (items: number) => void;
+  loading?: boolean;
 }
 
 const Pagination: React.FC<PaginationProps> = ({
@@ -19,6 +20,7 @@ const Pagination: React.FC<PaginationProps> = ({
   itemsPerPage,
   onPageChange,
   onItemsPerPageChange,
+  loading,
 }) => {
   const startItem = (currentPage - 1) * itemsPerPage + 1;
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
@@ -46,12 +48,13 @@ const Pagination: React.FC<PaginationProps> = ({
       <PaginationInfo startItem={startItem} endItem={endItem} totalItems={totalItems} />
 
       <div className="pagination-controls">
-        <ItemsPerPageSelect itemsPerPage={itemsPerPage} onChange={onItemsPerPageChange} />
+        <ItemsPerPageSelect itemsPerPage={itemsPerPage} onChange={onItemsPerPageChange} disabled={loading} />
         <PaginationControls
           currentPage={currentPage}
           totalPages={totalPages}
           pages={generatePageNumbers()}
           onPageChange={onPageChange}
+          disabled={loading}
         />
       </div>
     </div>

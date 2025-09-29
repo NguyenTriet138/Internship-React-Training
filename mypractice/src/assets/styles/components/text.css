@@ -17,3 +17,7 @@
   font-weight: var(--fw-bold);
   line-height: 20px;
 }
+
+.text-info.selection {
+  cursor: pointer;
+}
