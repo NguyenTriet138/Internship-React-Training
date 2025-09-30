@@ -3,6 +3,8 @@ import { Product, ProductFilter, SaveProductDataRequest } from 'types/product.ty
 import { PaginatedResult } from 'types/pagination.types';
 import { ProductService } from '@models/productModel';
 
+const productService = new ProductService();
+
 export const useProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -12,8 +14,6 @@ export const useProducts = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [currentFilters, setCurrentFilters] = useState<ProductFilter>({});
-
-  const productService = new ProductService();
 
   const createProduct = useCallback(async (data: SaveProductDataRequest): Promise<Product> => {
     try {
